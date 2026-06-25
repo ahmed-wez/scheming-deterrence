@@ -4,7 +4,7 @@
 models:
   primary:
     repo_id: meta-llama/Llama-3.1-8B-Instruct
-    revision: null   # fill in with the pinned commit SHA printed by 01_download_model.py
+    revision: 0e9e39f249a16976918f6564b8830bc894c89659
     gated: true
     local_dir: model_cache/llama-3.1-8b-instruct
     status: active
