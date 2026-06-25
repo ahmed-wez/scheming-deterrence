@@ -1,0 +1,30 @@
+# See docs/plan_amendments.md and configs/study_design.yaml — the replication
+# target below is intentionally deferred per the compute-reduction decision.
+
+models:
+  primary:
+    repo_id: meta-llama/Llama-3.1-8B-Instruct
+    revision: null   # fill in with the pinned commit SHA printed by 01_download_model.py
+    gated: true
+    local_dir: model_cache/llama-3.1-8b-instruct
+    status: active
+
+  replication:
+    repo_id: Qwen/Qwen2.5-7B-Instruct
+    revision: null   # fill in after first download
+    gated: false
+    local_dir: model_cache/qwen2.5-7b-instruct
+    status: deferred_to_revision   # do not download until revision stage — see plan_amendments.md
+
+quantization:
+  # Use the highest precision that fits, in this order, for *baseline* benchmarking.
+  # Quantization changes model outputs slightly, so for "clean baseline" numbers you
+  # want the least aggressive quantization your GPU can actually hold.
+  baseline_eval_preference: [fp16, int8]
+  # Reserved for Phase 1 fine-tuning (QLoRA) — not used by these scripts yet.
+  training_qlora: int4
+
+hardware_notes:
+  kaggle_t4x2_vram_gb: 16   # per GPU, not pooled by default
+  kaggle_p100_vram_gb: 16
+  prefer_accelerator: T4x2  # better fp16 tensor core throughput than P100
