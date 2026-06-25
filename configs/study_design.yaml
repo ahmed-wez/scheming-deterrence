@@ -1,0 +1,32 @@
+# Canonical study-design parameters, post compute-reduction pass.
+# See docs/plan_amendments.md for full rationale.
+# Every future script (Phase 1, 3, 4, 5, 6) should read its counts from here
+# rather than hardcoding the original plan's numbers (5 seeds, 300 interactions, etc).
+
+seeds_per_condition: 3   # was 5
+
+measurement:
+  # Phase 4.1-4.2. Total per model version, split across task categories.
+  total_interactions_per_condition: 200   # was 300
+  category_1_direct_scheming_opportunities: 100   # was 150
+  category_2_ambiguous_opportunities: 67           # was 100
+  category_3_control_tasks: 33                     # was 50
+
+decay_test:
+  # Phase 6.3
+  interactions_per_condition: 500   # was 1000
+  rolling_window_size: 50           # was 100
+  conditions: [B, D]
+
+mechanism_analysis:
+  # Phase 5
+  conditions: [A, D]   # was [A, B, C, D]
+  note: >
+    Stated-only / actual-only sub-probe decomposition (5.1) is not cleanly
+    separable with only 2 conditions. Activation steering causal test (5.4)
+    is unaffected — it was already an A-to-D comparison. B/C can be added
+    later cheaply via forward passes on Phase 4's already-logged generations.
+
+replication:
+  model: Qwen2.5-7B-Instruct
+  status: deferred_to_revision   # Phase 6.1 — requires --confirm-deferred to download
